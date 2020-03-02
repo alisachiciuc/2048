@@ -1,0 +1,180 @@
+2048.
+
+Functia print_menu: atribuie ferestrei perechea de culori 5
+		    parcurge de la 0 la numberofchoice: daca hightlight este egal cu i+1: atribuie ferestre perechea de culori 3
+											  afiseaza pe pozitia 2+i,2 choice[i]
+							altfel: afiseaza pe pozitia 2+i,2,choise[i]
+		   atrebuie ferestrei perechea de culori 2
+		   afiseaza pe pozitia 0,6 "2048"
+		   atribuie ferestrei perechea de culori 5
+		   afiseaza bare pana si dupa "2048"
+
+
+Functia menu: creaza o fereastra noua
+	      activeaza keypad
+	      apeleaza functia print_menu
+	      rescrie fereastra
+	      cat timp e 1: lui c ii atribuie tasta
+			    daca tasta e KEY_UP: daca highlight e primul, atunci i se atribuie ultimul,
+						 altfel descreste highlight.
+			    daca tasta e KEY_DOWN: daca highlight e e ultimul, i se atribuie primul,
+						   altfel creste highlight.
+			    daca e 10(ENTER): choise i se atribuie highlight.
+			    apeleaza functia print-menu
+			    daca choice e diferit de 0(alegerea a fost efectuata) intrerupe
+			    returneaza choice
+
+Functia handleKeyRight: memoreaza valoarea curent a celulelor in old_tem
+			memoreaza valoarea curenta a scorului in old_tem 
+			parcurge matricea pe linii si pana la a 3 coloana.
+				daca celula e nula: trece la urmatoarea
+			parcurge de la urmatoarea coloana
+				daca e diferita de zero lui next ii atribuie t
+			daca celula are valoarea 0: pe cea precedenta o muta in ea
+			daca doua celule au aceeasi valoare si nu au avut nici o schimbare: face suma dintre ele in a 2 si change devine 1
+											    prima celula devine 0
+											    creste scorul
+											    moved devine 1
+			daca celula e nenula si coloana precedenta e diferita de column: muta valoarea din column in next-1
+			in caz ca s-a produs miscarea: memoreaza in old valorile celulelor inainte de miscare
+						       memoreaza in old_tem valoare scorului inainte de miscare
+
+Functia handleKeyLeft:  memoreaza valoarea curent a celulelor in old_tem
+			memoreaza valoarea curenta a scorului in old_tem 
+			parcurge matricea pe linii si de la a 2 coloana.
+				daca celula e nula: trece la urmatoarea
+			parcurge de la ultima la urmatoarea coloana
+				daca e diferita de zero lui next ii atribuie t
+			daca celula are valoarea 0: pe cea urmatoare o muta in ea
+			daca doua celule au aceeasi valoare si nu au avut nici o schimbare: face suma dintre ele in a 2 si change devine 1
+											    prima celula devine 0
+											    creste scorul
+											    moved devine 1
+			daca celula e nenula si coloana urmatoare e diferita de column: muta valoarea din column in next+1
+			in caz ca s-a produs miscarea: memoreaza in old valorile celulelor inainte de miscare
+						       memoreaza in old_tem valoare scorului inainte de miscare
+
+
+Functia handleKeyUp:    memoreaza valoarea curent a celulelor in old_tem
+			memoreaza valoarea curenta a scorului in old_tem  
+			parcurge matricea
+				daca celula e nula: trece la urmatoarea
+			parcurge de la ultimul rand
+				daca e diferita de zero lui next ii atribuie t
+			daca celula are valoarea 0: pe cea urmatoare o muta in ea
+			daca doua celule au aceeasi valoare si nu au avut nici o schimbare: face suma dintre ele in a 2 si change devine 1
+											    prima celula devine 0
+											    creste scorul
+											    moved devine 1
+			daca celula e nenula si randul urmator e diferita de row: muta valoarea din row in next+1
+			in caz ca s-a produs miscarea: memoreaza in old valorile celulelor inainte de miscare
+						       memoreaza in old_tem valoare scorului inainte de miscare
+
+
+Functia handleKeyUp:    memoreaza valoarea curent a celulelor in old_tem
+			memoreaza valoarea curenta a scorului in old_tem 
+			parcurge matricea
+				daca celula e nula: trece la urmatoarea
+			parcurge pana la randul 3
+				daca e diferita de zero lui next ii atribuie t
+			daca celula are valoarea 0: pe cea precedenta o muta in ea
+			daca doua celule au aceeasi valoare si nu au avut nici o schimbare: face suma dintre ele in a 2 si change devine 1
+											    prima celula devine 0
+											    creste scorul
+											    moved devine 1
+			daca celula e nenula si randul precedent e diferita de row: muta valoarea din row in next-1
+			in caz ca s-a produs miscarea: memoreaza in old valorile celulelor inainte de miscare
+						       memoreaza in old_tem valoare scorului inainte de miscare
+
+														
+Functia hasFreeCells: parcurge matricea. 
+		      Daca exista o celula cu valoare 0: hasFreeCell devine 1 si se intrerupe. 
+		      returneaza hasFreeCell.
+
+Functia getRandomCell: parcurge matricea: daca exista un element 0: memoreaza pozitia acestuia in tabloul availablecell
+		       randomcell ii atribuie un nmar random, apoi restu impartirii numarului la numarul de celule nule
+			returneaza pozitia celului cu numarul randomcell din tabloul availablecell
+
+void insertRandomCell: apeleaza functia hasFreeCell.
+		       Daca exista celule libere lui randomCell ii atribuie functia getRandomCell
+		       lui random ii atribuie un numar random
+		       lui value ii atribuie restul impartirii lui random la 10
+		       daca value <8 atunci i se atribuie 2
+		       altfel i se atribuie 4;
+		       celulei selectate random i se atribuie value.
+
+Functia clearMatrix: atribuie tuturor celulelor valoare 0
+
+Functia resetGame: Curata matricea
+		    Apeleaza de 2 ori functia insertRandomcell
+
+
+Functia gameWin: afiseaza pe pozitia 2,2 mesajul de felicitare
+
+Functia gameOver: afiseaza pe pozitia 2,2 mesajul "Game Over"
+
+Functia _checkWin: parcurge mtricea 
+		   daca exista celula cu valoare 2048 returneaza 1
+		   altfel returneaza 0
+
+Functia _checkGameOver: parcurge matricea
+			daca exista doua celule alaturate cu aceeasi valoare intoarce 0
+			altfel returneaza 1.
+
+Functia checkGame: apeleaza functia _checkWin
+		   daca aceasta este 1, returneza WIN.
+		   apeleaza functia _checkGameOver
+		   daca aceasta e 1, returneaza GAME_OVER
+
+Functia drawBoard: deseneaza tabla de joc
+
+Functia fillBoard: parcurge matricea
+		   in dependenta de valoare celulei, schimba culoarea acesteia
+		   afiseaza pe tabla valoarea cu culoarea respectiva
+
+Functia _clearTilesStatus: parcurge matricea
+			   fiecarei parti din structura care contine schimbare ii atribuie 0
+
+
+Functia pauseGame: curata ecranul
+		   afiseaza meniul
+
+Functia drawHelp: afiseaza timpul
+		  afiseaza scorul
+		  afiseaza instructiunile pentru joc
+Functia stepBack(pentru UNDO): atribuie celulelor valorile old(celel care erau inainte miscarii);
+				atribuie scorul valoarea old(cea care era inainte miscarii)
+
+Functia highScore: deschide fisierul high.txt pentru citire
+		   citeste tem si ii atribuie gameScore.high = (int) tem
+		   inchide fisierul
+		   daca valoarea curenta depaseste high: high devine valoarea curenta
+							 este inlocuita valoarea din fisier 
+
+Functia gameBoard: aloca memorie matricii
+		   apeleaza functiile resetGame, drawBoard, fillBoard, drawHelp
+		   citeste caracterul
+		   daca acesta e KEY_UP apeleaza functia handleKeyUp
+		   daca acesta e KEY_DOWN apeleaza handleKeyDown
+		   daca aceasta e KEY_LEFT apleaza handleKeyLeft
+		   daca aceasta e KEY_RIGHT apleaza handleKeyRight
+		   daca e 81(Q):
+		   daca e 113(q): apeleaza in choice pauseGame
+				  daca choice e EXIT: iese din joc
+				  daca choice e NEW_GAME: apeleaza functia resetGame
+		  daca e 85(U):
+		  daca e 117(u): apleaza functia stepBack
+		  daca s-a facut vreo miscare apeleaza insertRandomCell
+		  reinnoieste tabla de joc
+		  verifica daca nu se indeplineste conditia pentru WIN sau GAME_OVER
+
+Functia main: initializeaza ncurses
+	      creaza lungimea si latimea terminalului
+	      defineste perechile de culori
+	      ascunde cursorul
+	      atat timp cat e 1: curata ecranul
+				 apeleaza in choice functia meniu
+				     daca choice e NEW_Game apeleaza in exit functia gameboard
+				     daca choise e EXIT intrerupe
+				 daca exist exista intrerupe
+	      inchie fereastra.	
